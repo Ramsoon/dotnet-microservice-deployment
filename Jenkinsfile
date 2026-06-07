@@ -98,7 +98,7 @@ pipeline {
                 }
             }
         }
-
+// Deploying User and Task services in separate stages allows for better isolation and easier troubleshooting if one of the services fails to deploy correctly. It also provides clearer visibility into which service is being deployed at each step of the pipeline.
         stage('Deploy User Service') {
 
             steps {
