@@ -15,12 +15,12 @@ WORKDIR /app
 COPY --from=build /app .
 
 # Create a non-root user and ensure the app directory is owned by them
-RUN groupadd -r app && useradd -r -g app -d /app -s /bin/sh app
-RUN chown -R app:app /app
+RUN groupadd -r appuser && useradd -r -g appuser -d /app -s /bin/sh appuser
+RUN chown -R appuser:appuser /app
 
 EXPOSE 8080
 
 # Run the app as the non-root user
-USER app
+USER appuser
 
-ENTRYPOINT ["dotnet","user-service.dll"]
+ENTRYPOINT ["dotnet","task-service.dll"]
