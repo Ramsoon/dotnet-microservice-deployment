@@ -14,7 +14,7 @@ WORKDIR /app
 
 COPY --from=build /app .
 
-# Create a non-root user and ensure the app directory is owned by them
+# Create a non-root user and ensure the app directory is owned by them for security best practices
 RUN groupadd -r appuser && useradd -r -g appuser -d /app -s /bin/sh appuser
 RUN chown -R appuser:appuser /app
 
