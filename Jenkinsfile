@@ -76,6 +76,20 @@ pipeline {
             }
         }
 
+// copy files
+
+        stage('Copy Kubernetes Files') {
+            steps {
+                sshagent(['deploy-server']) {
+                    sh '''
+                    ssh ${DEPLOY_USER}@${TARGET_SERVER} "mkdir -p /opt/taskflow/k8s"
+
+                    scp -r k8s/* ${DEPLOY_USER}@${TARGET_SERVER}:/opt/taskflow/k8s/
+                    '''
+                }
+            }
+        }
+
         stage('Deploy PostgreSQL') {
 
             steps {
