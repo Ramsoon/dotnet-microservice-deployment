@@ -82,9 +82,9 @@ pipeline {
             steps {
                 sshagent(['deploy-server']) {
                     sh '''
-                    ssh ${DEPLOY_USER}@${TARGET_SERVER} "mkdir -p /opt/taskflow/k8s"
+                    ssh ${DEPLOY_USER}@${TARGET_SERVER} "mkdir -p ~/taskflow/k8s"
 
-                    scp -r k8s/* ${DEPLOY_USER}@${TARGET_SERVER}:/opt/taskflow/k8s/
+                    scp -r k8s/* ${DEPLOY_USER}@${TARGET_SERVER}:~/taskflow/k8s/
                     '''
                 }
             }
@@ -99,11 +99,11 @@ pipeline {
                     sh '''
                     ssh -o StrictHostKeyChecking=no ${DEPLOY_USER}@${TARGET_SERVER} "
 
-                    kubectl apply -f /opt/taskflow/k8s/postgres-pvc.yaml
+                    kubectl apply -f ~/taskflow/k8s/postgres-pvc.yaml
 
-                    kubectl apply -f /opt/taskflow/k8s/postgres-service.yaml
+                    kubectl apply -f ~/taskflow/k8s/postgres-service.yaml
 
-                    kubectl apply -f /opt/taskflow/k8s/postgres-deployment.yaml
+                    kubectl apply -f ~/taskflow/k8s/postgres-deployment.yaml
 
                     kubectl rollout status deployment/postgres
 
@@ -125,9 +125,9 @@ pipeline {
                     export IMAGE_TAG=${IMAGE_TAG}
                     export MY_REGISTRY=${MY_REGISTRY}
 
-                    envsubst < /opt/taskflow/k8s/user-deployment.yaml | kubectl apply -f -
+                    envsubst < ~/taskflow/k8s/user-deployment.yaml | kubectl apply -f -
 
-                    kubectl apply -f /opt/taskflow/k8s/user-service.yaml
+                    kubectl apply -f ~/taskflow/k8s/user-service.yaml
 
                     kubectl rollout status deployment/user-service
 
@@ -149,9 +149,9 @@ pipeline {
                     export IMAGE_TAG=${IMAGE_TAG}
                     export MY_REGISTRY=${MY_REGISTRY}
 
-                    envsubst < /opt/taskflow/k8s/task-deployment.yaml | kubectl apply -f -
+                    envsubst < ~/taskflow/k8s/task-deployment.yaml | kubectl apply -f -
 
-                    kubectl apply -f /opt/taskflow/k8s/task-service.yaml
+                    kubectl apply -f ~/taskflow/k8s/task-service.yaml
 
                     kubectl rollout status deployment/task-service
 
@@ -170,11 +170,11 @@ pipeline {
                     sh '''
                     ssh -o StrictHostKeyChecking=no ${DEPLOY_USER}@${TARGET_SERVER} "
 
-                    kubectl apply -f /opt/taskflow/k8s/ingress.yaml
+                    kubectl apply -f ~/taskflow/k8s/ingress.yaml
 
-                    kubectl apply -f /opt/taskflow/k8s/hpa-user.yaml
+                    kubectl apply -f ~/taskflow/k8s/hpa-user.yaml
 
-                    kubectl apply -f /opt/taskflow/k8s/hpa-task.yaml
+                    kubectl apply -f ~/taskflow/k8s/hpa-task.yaml
 
                     "
                     '''
