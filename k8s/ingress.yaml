@@ -13,20 +13,32 @@ spec:
 
       - path: /api/users
         pathType: Prefix
-
         backend:
           service:
             name: user-service
-
             port:
               number: 80
 
       - path: /api/tasks
         pathType: Prefix
-
         backend:
           service:
             name: task-service
+            port:
+              number: 80
 
+      - path: /swagger/users
+        pathType: Prefix
+        backend:
+          service:
+            name: user-service
+            port:
+              number: 80
+
+      - path: /swagger/tasks
+        pathType: Prefix
+        backend:
+          service:
+            name: task-service
             port:
               number: 80
