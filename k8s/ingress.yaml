@@ -11,7 +11,7 @@ spec:
   - http:
       paths:
 
-      - path: /users
+      - path: /api/users
         pathType: Prefix
 
         backend:
@@ -21,7 +21,7 @@ spec:
             port:
               number: 80
 
-      - path: /tasks
+      - path: /api/tasks
         pathType: Prefix
 
         backend:
